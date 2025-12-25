@@ -28,9 +28,9 @@
     <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-slate-200">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-3xl logo-font text-blue-900">شـــووور<span class="text-orange-500 text-sm block font-normal tracking-normal">Shooor</span></div>
-            <div class="space-x-4 space-x-reverse">
-                <a href="#experts" class="text-sm font-bold text-slate-600">تصفح الخبراء</a>
-                <button class="bg-blue-900 text-white px-6 py-2 rounded-full text-sm font-bold active:scale-95 transition">دخول</button>
+            <div class="flex gap-2">
+                <a href="#customer-register" class="bg-blue-100 text-blue-900 px-4 py-2 rounded-full text-xs font-bold">تسجيل عميل</a>
+                <a href="#join-expert" class="bg-blue-900 text-white px-4 py-2 rounded-full text-xs font-bold">انضم كخبير</a>
             </div>
         </div>
     </header>
@@ -41,64 +41,76 @@
             <p class="text-xl text-slate-500 mb-10 text-right md:text-center">ارتبط بخبراء السفر الحقيقيين وخذ "الشور" من مجرّب</p>
             
             <div class="flex flex-col md:flex-row gap-4 justify-center">
-                <a href="#experts" class="bg-blue-900 text-white px-10 py-4 rounded-2xl font-black text-lg shadow-xl shadow-blue-200 active:scale-95 transition text-center">أحتاج شور</a>
-                <a href="#join-expert" class="bg-white border-2 border-blue-900 text-blue-900 px-10 py-4 rounded-2xl font-black text-lg active:scale-95 transition text-center">أنا صاحب شور</a>
+                <a href="#experts" class="bg-blue-900 text-white px-10 py-4 rounded-2xl font-black text-lg shadow-xl shadow-blue-200 active:scale-95 transition text-center">تصفح الخبراء</a>
+                <a href="#customer-register" class="bg-orange-500 text-white px-10 py-4 rounded-2xl font-black text-lg shadow-xl shadow-orange-200 active:scale-95 transition text-center">سجل الآن للمشاورة</a>
             </div>
         </div>
     </section>
 
+    <section id="customer-register" class="py-16 bg-orange-50 px-6">
+        <div class="max-w-xl mx-auto bg-white p-8 rounded-3xl shadow-sm border border-orange-100 text-right">
+            <h3 class="text-2xl font-black mb-2 text-center text-blue-900">إنشاء حساب مستفيد</h3>
+            <p class="text-center text-slate-500 text-sm mb-8">سجل بياناتك لتصلك موافقات الخبراء وروابط المحادثة</p>
+            
+            <form action="https://formspree.io/f/maqywone" method="POST" class="space-y-4">
+                <input type="hidden" name="type" value="عضو_جديد_مستفيد">
+                <input type="text" name="name" required placeholder="الاسم الكامل" class="w-full p-4 rounded-xl bg-slate-50 outline-none border border-transparent focus:border-orange-500">
+                <input type="tel" name="phone" required placeholder="رقم الجوال" class="w-full p-4 rounded-xl bg-slate-50 outline-none border border-transparent focus:border-orange-500">
+                <button type="submit" class="w-full bg-orange-500 text-white py-4 rounded-xl font-black text-lg shadow-lg active:scale-95 transition">فتح حساب عضوية</button>
+            </form>
+        </div>
+    </section>
+
     <section id="experts" class="py-20 px-6 max-w-6xl mx-auto">
-        <h3 class="text-2xl font-black mb-10 border-r-4 border-orange-500 pr-4">خبراء متاحون الآن</h3>
+        <h3 class="text-2xl font-black mb-10 border-r-4 border-orange-500 pr-4 text-right">خبراء متاحون الآن</h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-right">
             
-            <div class="bg-white p-6 rounded-3xl shadow-sm hover:shadow-xl transition border border-slate-100 flex flex-col justify-between">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center gap-4 mb-4">
                         <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center text-2xl">👤</div>
                         <div>
-                            <h4 class="font-bold text-right">أحمد علي</h4>
+                            <h4 class="font-bold">أحمد علي</h4>
                             <span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded-full">خبير سويسرا</span>
                         </div>
                     </div>
-                    <p class="text-sm text-slate-600 mb-6 leading-relaxed">"زرت سويسرا 5 مرات، خبير في تخطيط القطارات والسكن الاقتصادي في إنترلاكن."</p>
+                    <p class="text-sm text-slate-600 mb-6 leading-relaxed">"خبير في تخطيط القطارات والسكن الاقتصادي في إنترلاكن."</p>
                 </div>
-                <div class="flex justify-between items-center border-t pt-4">
-                    <span class="font-black text-blue-900">شور مجرّب</span>
-                    <a href="https://wa.me/966506775662?text=أريد_الشور_من_خبير_سويسرا" target="_blank" class="text-sm font-bold text-orange-500">اطلب الشور ←</a>
+                <div class="border-t pt-4">
+                    <a href="https://wa.me/966506775662?text=أريد_الشور_من_أحمد_سويسرا" class="text-sm font-bold text-orange-500">طلب استشارة ←</a>
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-3xl shadow-sm hover:shadow-xl transition border border-slate-100 flex flex-col justify-between">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center gap-4 mb-4">
                         <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center text-2xl">👤</div>
                         <div>
-                            <h4 class="font-bold text-right">سارة م.</h4>
+                            <h4 class="font-bold">سارة م.</h4>
                             <span class="text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded-full">خبيرة اليابان</span>
                         </div>
                     </div>
-                    <p class="text-sm text-slate-600 mb-6 leading-relaxed">"أساعدك في استخراج الفيزا وترتيب جدول يومي في طوكيو وأوساكا."</p>
+                    <p class="text-sm text-slate-600 mb-6 leading-relaxed">"أساعدك في استخراج الفيزا وترتيب جدول يومي في اليابان."</p>
                 </div>
-                <div class="flex justify-between items-center border-t pt-4">
-                    <span class="font-black text-blue-900">شور مجرّب</span>
-                    <a href="https://wa.me/966506775662?text=أريد_الشور_من_خبيرة_اليابان" target="_blank" class="text-sm font-bold text-orange-500">اطلب الشور ←</a>
+                <div class="border-t pt-4">
+                    <a href="https://wa.me/966506775662?text=أريد_الشور_من_سارة_اليابان" class="text-sm font-bold text-orange-500">طلب استشارة ←</a>
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-3xl shadow-sm hover:shadow-xl transition border border-slate-100 flex flex-col justify-between">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center gap-4 mb-4">
                         <div class="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center text-2xl">🇬🇧</div>
                         <div>
-                            <a href="khaled.html" class="font-bold text-right hover:text-orange-500 transition">خالد محمد</a>
-                            <span class="text-xs block bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full">خبير لندن</span>
+                            <h4 class="font-bold">خالد محمد</h4>
+                            <span class="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full">خبير لندن</span>
                         </div>
                     </div>
-                    <p class="text-sm text-slate-600 mb-6 leading-relaxed">"أصمم لك جدولك في لندن حسب ميزانيتك، وأعلمك أسرار التنقل والاقتصاد."</p>
+                    <p class="text-sm text-slate-600 mb-6 leading-relaxed">"أصمم لك جدولك في لندن حسب ميزانيتك، وأعلمك أسرار التنقل."</p>
                 </div>
-                <div class="flex justify-between items-center border-t pt-4">
-                    <span class="font-black text-blue-900">شور مجرّب</span>
-                    <a href="khaled.html" class="text-sm font-bold text-orange-500">عرض الملف ←</a>
+                <div class="border-t pt-4 flex justify-between items-center">
+                    <a href="khaled.html" class="text-sm font-bold text-blue-900">الملف الشخصي</a>
+                    <a href="khaled.html" class="text-sm font-bold text-orange-500">طلب استشارة ←</a>
                 </div>
             </div>
 
@@ -111,22 +123,16 @@
             <p class="text-blue-200 text-center mb-10 italic">"حوّل خبرتك في السفر إلى مصدر دخل"</p>
             
             <form action="https://formspree.io/f/maqywone" method="POST" class="space-y-4 text-slate-900">
-                <input type="text" name="name" required placeholder="الاسم الكريم" class="w-full p-4 rounded-xl outline-none border-2 border-transparent focus:border-orange-500">
-                <input type="tel" name="phone" required placeholder="رقم الجوال (للتواصل واتساب)" class="w-full p-4 rounded-xl outline-none border-2 border-transparent focus:border-orange-500">
-                <input type="text" name="expert_in" required placeholder="الدولة التي خبير بها" class="w-full p-4 rounded-xl outline-none border-2 border-transparent focus:border-orange-500">
-                <div class="grid grid-cols-2 gap-4">
-                    <input type="number" name="years" placeholder="سنوات الخبرة" class="w-full p-4 rounded-xl outline-none">
-                    <select name="level" class="w-full p-4 rounded-xl outline-none bg-white">
-                        <option>خبير (زرتها كثيراً)</option>
-                        <option>مقيم (عشت فيها)</option>
-                    </select>
-                </div>
-                <button type="submit" class="w-full bg-orange-500 text-white py-4 rounded-xl font-black text-lg shadow-lg active:scale-95 hover:bg-orange-600 transition-all">إرسال طلب الانضمام</button>
+                <input type="hidden" name="type" value="طلب_انضمام_خبير">
+                <input type="text" name="name" required placeholder="الاسم الكريم" class="w-full p-4 rounded-xl outline-none">
+                <input type="tel" name="phone" required placeholder="رقم الجوال" class="w-full p-4 rounded-xl outline-none">
+                <input type="text" name="expert_in" required placeholder="دولة الخبرة" class="w-full p-4 rounded-xl outline-none">
+                <button type="submit" class="w-full bg-orange-500 text-white py-4 rounded-xl font-black text-lg shadow-lg active:scale-95 transition">إرسال طلب الانضمام</button>
             </form>
         </div>
     </section>
 
-    <footer class="py-10 text-center text-slate-400">
+    <footer class="py-10 text-center text-slate-400 border-t">
         &copy; 2025 شـــووور - Shooor
     </footer>
 
