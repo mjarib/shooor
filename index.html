@@ -37,11 +37,11 @@
 
     <section class="py-20 px-6 bg-white text-center">
         <div class="max-w-3xl mx-auto">
-            <h1 class="text-5xl font-black mb-6 leading-tight text-blue-900">ما خاب من <span class="text-orange-500 text-6xl">استشار</span></h1>
-            <p class="text-xl text-slate-500 mb-10">ارتبط بخبراء السفر الحقيقيين وخذ "الشور" من مجرّب بضغطة زر</p>
+            <h1 class="text-5xl font-black mb-6 text-blue-900 leading-tight">ما خاب من <span class="text-orange-500 text-6xl font-black">استشار</span></h1>
+            <p class="text-xl text-slate-500 mb-10">ارتبط بخبراء السفر الحقيقيين وخذ الشور من مجرّب</p>
             <div class="flex flex-col md:flex-row gap-4 justify-center">
-                <a href="#experts" class="bg-blue-900 text-white px-10 py-4 rounded-2xl font-black text-lg shadow-xl shadow-blue-200 active:scale-95 transition">تصفح الخبراء</a>
-                <a href="#customer-register" class="bg-orange-500 text-white px-10 py-4 rounded-2xl font-black text-lg shadow-xl shadow-orange-200 active:scale-95 transition">سجل دخولك الآن</a>
+                <a href="#experts" class="bg-blue-900 text-white px-10 py-4 rounded-2xl font-black text-lg shadow-xl active:scale-95 transition">تصفح الخبراء</a>
+                <a href="#customer-register" class="bg-orange-500 text-white px-10 py-4 rounded-2xl font-black text-lg shadow-xl active:scale-95 transition">سجل دخولك الآن</a>
             </div>
         </div>
     </section>
@@ -77,48 +77,41 @@
                         </div>
                     </div>
                 </div>
-                
                 <button onclick="handleSignOut()" class="text-red-500 text-xs font-bold hover:underline">تسجيل الخروج</button>
             </div>
         </div>
     </section>
 
-    <section id="experts" class="py-20 px-6 max-w-6xl mx-auto">
-        <h3 class="text-2xl font-black mb-10 border-r-4 border-orange-500 pr-4 text-right">خبراء متاحون الآن</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-right">
-            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-14 h-14 bg-blue-50 rounded-full flex items-center justify-center text-2xl">👤</div>
-                        <div><h4 class="font-bold">أحمد علي</h4><span class="text-[10px] bg-orange-100 text-orange-600 px-2 py-0.5 rounded-full font-bold">خبير سويسرا</span></div>
-                    </div>
-                    <p class="text-sm text-slate-600 mb-6 leading-relaxed">"خبير في تخطيط القطارات والسكن الاقتصادي في إنترلاكن."</p>
+    <section id="experts" class="py-20 px-6 max-w-6xl mx-auto text-right">
+        <h3 class="text-2xl font-black mb-10 border-r-4 border-orange-500 pr-4">خبراء متاحون الآن</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-14 h-14 bg-blue-50 rounded-full flex items-center justify-center text-2xl">👤</div>
+                    <div><h4 class="font-bold">أحمد علي</h4><span class="text-[10px] bg-orange-100 text-orange-600 px-2 py-0.5 rounded-full font-bold">خبير سويسرا</span></div>
                 </div>
-                <div class="border-t pt-4"><a href="https://wa.me/966506775662?text=طلب_استشارة_أحمد" class="text-sm font-bold text-orange-500 hover:mr-2 transition-all">طلب استشارة ←</a></div>
+                <p class="text-sm text-slate-600 mb-6">"خبير في تخطيط القطارات والسكن الاقتصادي في إنترلاكن."</p>
+                <div class="border-t pt-4"><a href="https://wa.me/966506775662?text=طلب_استشارة_أحمد" class="text-sm font-bold text-orange-500">طلب استشارة ←</a></div>
             </div>
 
-            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-14 h-14 bg-green-50 rounded-full flex items-center justify-center text-2xl">👤</div>
-                        <div><h4 class="font-bold">سارة م.</h4><span class="text-[10px] bg-green-100 text-green-600 px-2 py-0.5 rounded-full font-bold">خبيرة اليابان</span></div>
-                    </div>
-                    <p class="text-sm text-slate-600 mb-6 leading-relaxed">"أساعدك في استخراج الفيزا وترتيب جدول يومي في اليابان."</p>
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-14 h-14 bg-green-50 rounded-full flex items-center justify-center text-2xl">👤</div>
+                    <div><h4 class="font-bold">سارة م.</h4><span class="text-[10px] bg-green-100 text-green-600 px-2 py-0.5 rounded-full font-bold">خبيرة اليابان</span></div>
                 </div>
-                <div class="border-t pt-4"><a href="https://wa.me/966506775662?text=طلب_استشارة_سارة" class="text-sm font-bold text-orange-500 hover:mr-2 transition-all">طلب استشارة ←</a></div>
+                <p class="text-sm text-slate-600 mb-6">"أساعدك في استخراج الفيزا وترتيب جدول يومي في اليابان."</p>
+                <div class="border-t pt-4"><a href="https://wa.me/966506775662?text=طلب_استشارة_سارة" class="text-sm font-bold text-orange-500">طلب استشارة ←</a></div>
             </div>
 
-            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-14 h-14 bg-purple-50 rounded-full flex items-center justify-center text-2xl">🇬🇧</div>
-                        <div><h4 class="font-bold">خالد محمد</h4><span class="text-[10px] bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full font-bold">خبير لندن</span></div>
-                    </div>
-                    <p class="text-sm text-slate-600 mb-6 leading-relaxed">"أصمم لك جدولك في لندن حسب ميزانيتك، وأعلمك أسرار التنقل."</p>
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-14 h-14 bg-purple-50 rounded-full flex items-center justify-center text-2xl">🇬🇧</div>
+                    <div><h4 class="font-bold">خالد محمد</h4><span class="text-[10px] bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full font-bold">خبير لندن</span></div>
                 </div>
+                <p class="text-sm text-slate-600 mb-6">"أصمم لك جدولك في لندن حسب ميزانيتك، وأعلمك أسرار التنقل."</p>
                 <div class="border-t pt-4 flex justify-between items-center">
                     <a href="khaled.html" class="text-[11px] font-bold text-blue-900 underline">الملف الشخصي</a>
-                    <a href="khaled.html" class="text-sm font-bold text-orange-500 hover:mr-2 transition-all">طلب استشارة ←</a>
+                    <a href="khaled.html" class="text-sm font-bold text-orange-500">طلب استشارة ←</a>
                 </div>
             </div>
         </div>
@@ -132,7 +125,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
     <script>
-        // بيانات مشروعك الفعلي في Firebase
+        // إعدادات مشروعك في Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAZSFCf7piwKykf_klgGlzc4RkCXumNRUg",
             authDomain: "shooor-app.firebaseapp.com",
@@ -147,9 +140,17 @@
         const auth = firebase.auth();
         const provider = new firebase.auth.GoogleAuthProvider();
 
+        // استخدام Redirect بدلاً من Popup لتجنب الحجب من المتصفحات
         function loginWithGoogle() {
-    auth.signInWithRedirect(provider);
-}
+            auth.signInWithRedirect(provider);
+        }
+
+        // معالجة نتيجة الدخول بعد إعادة التوجيه
+        auth.getRedirectResult().catch((error) => {
+            if (error.code !== 'auth/redirect-cancelled-by-user') {
+                alert("خطأ: " + error.message);
+            }
+        });
 
         auth.onAuthStateChanged((user) => {
             const authContainer = document.getElementById('auth-container');
