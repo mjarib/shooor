@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مُشير | منصة استشارات السفر المجربة</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            font-family: 'Tajawal', sans-serif; 
+            scroll-behavior: smooth;
+        }
+        .custom-gradient {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-900">
+
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
+        <div class="max-w-6xl mx-auto px-5 py-4 flex justify-between items-center">
+            <div class="text-2xl font-black text-blue-900 tracking-tighter">مُشير</div>
+            <button class="bg-blue-900 text-white px-5 py-2 rounded-full text-sm font-bold transition-transform active:scale-90">
+                دخول
+            </button>
+        </div>
+    </header>
+
+    <section class="custom-gradient pt-16 pb-24 px-5">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-black mb-6 leading-tight text-slate-900">
+                لا تقرر.. <span class="text-orange-500">قبل ما تشاور مُجرّب</span>
+            </h1>
+            <p class="text-lg text-slate-600 mb-12 max-w-2xl mx-auto">
+                ارتبط بخبراء السفر الحقيقيين الذين عاشوا التجربة قبلك، واحصل على نصائح واقعية بـ 20 ريالاً فقط.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 hover:border-orange-200 transition-all group">
+                    <div class="w-16 h-16 bg-orange-50 rounded-2xl flex items-center justify-center text-3xl mb-6 mx-auto group-hover:scale-110 transition-transform">✈️</div>
+                    <h2 class="text-xl font-bold mb-3 text-blue-900">أبحث عن خبير</h2>
+                    <p class="text-slate-500 mb-8 text-sm leading-relaxed">أحتاج خبيراً زار وجهتي القادمة ليعطيني الخلاصة والعيوب والمميزات.</p>
+                    <a href="#experts" class="block w-full bg-orange-500 text-white py-4 rounded-2xl font-black shadow-lg shadow-orange-200 transition-transform active:scale-95 text-center">
+                        تصفح الخبراء
+                    </a>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 hover:border-blue-200 transition-all group border-dashed border-2">
+                    <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-3xl mb-6 mx-auto group-hover:scale-110 transition-transform">🌍</div>
+                    <h2 class="text-xl font-bold mb-3 text-blue-900">انضم كمُشير</h2>
+                    <p class="text-slate-500 mb-8 text-sm leading-relaxed">لديك تجربة سفر ثرية؟ حول خبرتك لدخل إضافي وساعد المسافرين الآخرين.</p>
+                    <a href="#join-expert" class="block w-full border-2 border-blue-900 text-blue-900 py-4 rounded-2xl font-black transition-transform active:scale-95 text-center">
+                        تقديم كخبير
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="join-expert" class="py-20 px-5">
+        <div class="max-w-xl mx-auto bg-slate-50 p-8 md:p-12 rounded-[2rem] border border-slate-200">
+            <div class="text-center mb-10">
+                <span class="bg-blue-100 text-blue-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">فرصة انضمام</span>
+                <h3 class="text-3xl font-black mt-4 text-blue-900">سجل بياناتك كمُشير</h3>
+                <p class="text-slate-500 mt-2">سنراجع بياناتك ونوثق حسابك في أقرب وقت</p>
+            </div>
+
+            <form action="https://formspree.io/f/your-id" method="POST" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-bold mb-2 mr-1">الاسم الأول</label>
+                    <input type="text" name="name" required placeholder="مثلاً: خالد" 
+                        class="w-full p-4 rounded-2xl border-2 border-transparent bg-white shadow-sm focus:border-blue-900 focus:bg-white outline-none transition-all">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-bold mb-2 mr-1">الدولة/الوجهة التي تتقنها</label>
+                    <input type="text" name="destination" required placeholder="مثلاً: إيطاليا، تايلاند.." 
+                        class="w-full p-4 rounded-2xl border-2 border-transparent bg-white shadow-sm focus:border-blue-900 outline-none transition-all">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-bold mb-2 mr-1">مستوى الخبرة</label>
+                        <select name="level" class="w-full p-4 rounded-2xl border-2 border-transparent bg-white shadow-sm focus:border-blue-900 outline-none transition-all appearance-none">
+                            <option>ممارس</option>
+                            <option>خبير</option>
+                            <option>متخصص جداً</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-2 mr-1">سنوات التجربة</label>
+                        <input type="number" name="years" placeholder="3" 
+                            class="w-full p-4 rounded-2xl border-2 border-transparent bg-white shadow-sm focus:border-blue-900 outline-none transition-all">
+                    </div>
+                </div>
+
+                <div class="p-4 bg-white rounded-2xl border-2 border-dashed border-slate-200">
+                    <label class="block text-sm font-bold mb-2 text-slate-700">إثبات الخبرة (صور جواز أو تذكرة)</label>
+                    <input type="file" name="proof" class="text-xs text-slate-500 file:ml-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-blue-900 file:text-white hover:file:bg-blue-800">
+                </div>
+
+                <button type="submit" class="w-full bg-blue-900 text-white py-5 rounded-2xl font-black shadow-xl shadow-blue-100 mt-6 transition-all active:scale-[0.97] hover:bg-blue-800">
+                    إرسال الطلب للمراجعة
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="py-10 text-center border-t border-slate-100 text-slate-400 text-sm">
+        &copy; 2025 مُشير - كافة الحقوق محفوظة
+    </footer>
+
+</body>
+</html>
