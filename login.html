@@ -18,7 +18,7 @@
             <span>سجل دخولك باستخدام قوقل</span>
         </button>
 
-        <div id="status" class="mt-4 text-blue-900 font-bold text-sm hidden animate-pulse">جاري التحقق...</div>
+        <div id="status" class="mt-4 text-blue-900 font-bold text-sm hidden">جاري تحويلك إلى قوقل...</div>
         
         <a href="index.html" class="block mt-8 text-xs text-slate-400 font-bold hover:underline">العودة للرئيسية</a>
     </div>
@@ -27,17 +27,32 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 
     <script>
-        // إعدادات المشروع الصافية
+        // إعدادات Firebase
         const firebaseConfig = { 
             apiKey: "AIzaSyAZSFCf7piwKykf_klgGlzc4RkCXumNRUg", 
             authDomain: "shooor-app.firebaseapp.com", 
             projectId: "shooor-app" 
         };
         
-        // منع تكرار تهيئة التطبيق
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
+
+        // هذه الوظيفة تعمل "تلقائياً" عندما يعود المستخدم من صفحة قوقل
+        firebase.auth().getRedirectResult()
+            .then((result) => {
+                if (result.user) {
+                    console.log("تم تسجيل الدخول بنجاح:", result.user.displayName);
+                    // التحويل للرئيسية بعد النجاح
+                    window.location.href = "index.html";
+                }
+            })
+            .catch((error) => {
+                if (error.code !== 'auth/redirect-cancelled-by-user') {
+                    console.error("خطأ في إعادة التوجيه:", error.message);
+                    alert("حدث خطأ أثناء العودة من قوقل: " + error.message);
+                }
+            });
 
         function login() {
             const btn = document.getElementById('loginBtn');
@@ -48,25 +63,11 @@
             status.classList.remove('hidden');
 
             const provider = new firebase.auth.GoogleAuthProvider();
-            
-            // إضافة إعدادات إضافية لضمان عمل الطلب
+            // إجبار المستخدم على اختيار حساب (حتى لو كان مسجلاً دخوله)
             provider.setCustomParameters({ prompt: 'select_account' });
 
-            firebase.auth().signInWithPopup(provider)
-                .then((result) => {
-                    console.log("نجح الدخول:", result.user.displayName);
-                    window.location.href = "index.html";
-                })
-                .catch((error) => {
-                    btn.disabled = false;
-                    btn.style.opacity = '1';
-                    status.classList.add('hidden');
-                    
-                    console.error("Firebase Error Code:", error.code);
-                    console.error("Firebase Error Message:", error.message);
-                    
-                    alert("نعتذر، حدث خطأ: " + error.message);
-                });
+            // استخدام نظام التوجيه بالكامل بدلاً من النافذة المنبثقة
+            firebase.auth().signInWithRedirect(provider);
         }
     </script>
 </body>
