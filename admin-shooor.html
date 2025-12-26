@@ -68,21 +68,22 @@
                         <p class="text-[10px] text-orange-400 font-black uppercase">طلبات بانتظار المراجعة</p>
                         <h4 class="text-2xl font-black text-orange-600" id="pending-count">1</h4>
                     </div>
-                    <div class="p-4 bg-green-50 rounded-2xl">
-                        <p class="text-[10px] text-green-400 font-black uppercase">إجمالي المحادثات اليوم</p>
-                        <h4 class="text-2xl font-black text-green-600">8</h4>
-                    </div>
-                </div>
-
-                <div class="bg-slate-900 p-6 rounded-[2.5rem] text-white">
-                    <h4 class="text-sm font-black mb-2 italic">ملاحظة للمدير:</h4>
-                    <p class="text-[10px] text-slate-400 leading-relaxed">عند الضغط على اعتماد، سيتم إرسال بيانات الخبير لقاعدة البيانات وسيظهر فوراً في الصفحة الرئيسية مع العناوين التي أضفتها.</p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        // --- إضافة نظام الرمز السري هنا في البداية ---
+        const adminPass = "2025"; // هذا هو الرمز السري، يمكنك تغييره لأي رقم تريده
+        let entry = prompt("يرجى إدخال رمز الدخول للمدير لفتح اللوحة:");
+
+        if (entry !== adminPass) {
+            alert("عذراً، الرمز خاطئ. لا تملك صلاحية الدخول.");
+            window.location.href = "index.html"; // طرد الشخص للصفحة الرئيسية
+        }
+        // --- نهاية كود الرمز السري ---
+
         function approveExpert(id, name) {
             const tags = document.getElementById(`tags-input-${id}`).value;
             if(!tags) {
@@ -90,10 +91,8 @@
                 return;
             }
             
-            // محاكاة عملية النشر
-            alert(`تم اعتماد ${name} بنجاح!\nالعناوين المضافة: ${tags}\nسيظهر الآن في الصفحة الرئيسية.`);
+            alert(`تم اعتماد ${name} بنجاح!\nالعناوين المضافة: ${tags}`);
             
-            // إخفاء الطلب بعد الاعتماد
             const card = document.getElementById(`tags-input-${id}`).closest('.bg-white');
             card.style.opacity = '0.5';
             card.style.pointerEvents = 'none';
