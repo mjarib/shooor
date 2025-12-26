@@ -17,7 +17,7 @@
             <span>سجل دخولك باستخدام قوقل</span>
         </button>
 
-        <div id="loading" class="hidden mt-4 text-blue-900 font-bold text-sm animate-pulse">جاري التحقق...</div>
+        <div id="status" class="mt-4 text-blue-900 font-bold text-sm hidden">جاري التحميل...</div>
         
         <a href="index.html" class="block mt-8 text-xs text-slate-400 font-bold hover:underline">العودة للرئيسية</a>
     </div>
@@ -26,7 +26,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
     <script>
-        // إعدادات Firebase الخاصة بمشروعك
         const firebaseConfig = { 
             apiKey: "AIzaSyAZSFCf7piwKykf_klgGlzc4RkCXumNRUg", 
             authDomain: "shooor-app.firebaseapp.com", 
@@ -37,35 +36,28 @@
             firebase.initializeApp(firebaseConfig);
         }
 
+        // هذه الوظيفة تتحقق إذا عاد المستخدم من صفحة قوقل بنجاح
+        firebase.auth().getRedirectResult().then((result) => {
+            if (result.user) {
+                window.location.href = "index.html";
+            }
+        }).catch((error) => {
+            console.error("خطأ في العودة:", error.message);
+        });
+
         function login() {
             const btn = document.getElementById('loginBtn');
-            const loader = document.getElementById('loading');
+            const status = document.getElementById('status');
             
             btn.disabled = true;
             btn.style.opacity = '0.5';
-            loader.classList.remove('hidden');
+            status.innerText = "جاري تحويلك إلى قوقل...";
+            status.classList.remove('hidden');
 
             const provider = new firebase.auth.GoogleAuthProvider();
             
-            // محاولة تسجيل الدخول عبر النافذة المنبثقة
-            firebase.auth().signInWithPopup(provider)
-                .then((result) => {
-                    console.log("نجح الدخول:", result.user.displayName);
-                    window.location.href = "index.html";
-                })
-                .catch((error) => {
-                    btn.disabled = false;
-                    btn.style.opacity = '1';
-                    loader.classList.add('hidden');
-                    
-                    if (error.code === 'auth/popup-closed-by-user') {
-                        alert("لقد قمت بإغلاق نافذة الدخول قبل إتمام العملية. حاول مجدداً.");
-                    } else if (error.code === 'auth/cancelled-popup-request') {
-                        // لا تفعل شيئاً، الطلب تكرر
-                    } else {
-                        alert("حدث خطأ أثناء الدخول: " + error.message);
-                    }
-                });
+            // استخدام Redirect بدلاً من Popup لحل مشكلة الإغلاق والحظر
+            firebase.auth().signInWithRedirect(provider);
         }
     </script>
 </body>
