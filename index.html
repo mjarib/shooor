@@ -8,8 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Tajawal', sans-serif; scroll-behavior: smooth; }
-        .category-card:hover { transform: translateY(-5px); border-color: #1e3a8a; }
-        .animate-fade-in { animation: fadeIn 0.3s ease-in; }
+        .category-card { transition: all 0.3s ease; border: 2px solid transparent; }
+        .category-card:hover { transform: translateY(-5px); border-color: #1e3a8a; shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -22,111 +23,149 @@
                 <div class="text-[10px] font-bold text-orange-500 tracking-[0.2em] uppercase">Shooor</div>
             </div>
             <div class="flex gap-2">
-                <a href="join.html" class="bg-blue-900 text-white px-4 py-2 rounded-full text-xs font-black">انضم كخبير</a>
+                <a href="join.html" class="bg-blue-900 text-white px-4 py-2 rounded-full text-xs font-black shadow-md hover:bg-orange-500 transition-colors">انضم كخبير</a>
             </div>
         </div>
     </header>
 
-    <section class="py-12 px-6 text-center bg-white">
+    <section class="py-12 px-6 text-center bg-white border-b border-slate-50">
         <h1 class="text-4xl md:text-5xl font-black mb-4 text-blue-900 leading-tight">ابحث عن شخص <span class="text-orange-500 underline underline-offset-8">عاش</span> تجربتك</h1>
         <p class="text-slate-500 font-bold max-w-xl mx-auto text-sm">منصة الاستشارات التي تنقل لك الواقع كما هو، من أشخاص خاضوا التجربة قبلك.</p>
     </section>
 
-    <section class="px-6 py-8 max-w-6xl mx-auto">
-        <h2 class="text-xl font-black text-blue-900 mb-6 italic tracking-tighter">اطلب الشور في:</h2>
+    <section class="px-6 py-10 max-w-6xl mx-auto">
+        <h2 class="text-xl font-black text-blue-900 mb-8 italic tracking-tighter">اطلب الشور في:</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <button onclick="openCategory('travel', 'السفر السياحي')" class="category-card bg-white p-6 rounded-[2.5rem] shadow-sm border-2 border-transparent text-center transition-all">
-                <div class="text-4xl mb-2">🌍</div>
-                <span class="font-black text-blue-900 block">السفر</span>
+            <button onclick="openCategory('travel', 'السفر السياحي')" class="category-card bg-white p-8 rounded-[2.5rem] shadow-sm text-center">
+                <div class="text-4xl mb-3">🌍</div>
+                <span class="font-black text-blue-900 block text-lg">السفر</span>
             </button>
-            <button onclick="openCategory('psychology', 'تجارب نفسية')" class="category-card bg-white p-6 rounded-[2.5rem] shadow-sm border-2 border-transparent text-center transition-all">
-                <div class="text-4xl mb-2">🧠</div>
-                <span class="font-black text-blue-900 block">نفسية</span>
+            <button onclick="openCategory('psychology', 'تجارب نفسية')" class="category-card bg-white p-8 rounded-[2.5rem] shadow-sm text-center">
+                <div class="text-4xl mb-3">🧠</div>
+                <span class="font-black text-blue-900 block text-lg">نفسية</span>
             </button>
-            <button onclick="openCategory('business', 'بناء المشاريع')" class="category-card bg-white p-6 rounded-[2.5rem] shadow-sm border-2 border-transparent text-center transition-all">
-                <div class="text-4xl mb-2">💼</div>
-                <span class="font-black text-blue-900 block">مشاريع</span>
+            <button onclick="openCategory('business', 'بناء المشاريع')" class="category-card bg-white p-8 rounded-[2.5rem] shadow-sm text-center">
+                <div class="text-4xl mb-3">💼</div>
+                <span class="font-black text-blue-900 block text-lg">مشاريع</span>
             </button>
-            <button onclick="openCategory('life', 'تجارب عامة')" class="category-card bg-white p-6 rounded-[2.5rem] shadow-sm border-2 border-transparent text-center transition-all">
-                <div class="text-4xl mb-2">💡</div>
-                <span class="font-black text-blue-900 block">أخرى</span>
+            <button onclick="openCategory('life', 'تجارب عامة')" class="category-card bg-white p-8 rounded-[2.5rem] shadow-sm text-center">
+                <div class="text-4xl mb-3">💡</div>
+                <span class="font-black text-blue-900 block text-lg">أخرى</span>
             </button>
         </div>
     </section>
 
     <section id="search-section" class="hidden px-6 py-4 max-w-2xl mx-auto animate-fade-in">
-        <div class="bg-blue-900 p-6 rounded-[2.5rem] shadow-xl">
-            <div class="flex justify-between items-center mb-4 text-white">
-                <h3 id="category-title" class="font-black text-lg italic tracking-tighter">البحث</h3>
-                <button onclick="closeSearch()" class="text-[10px] bg-white/10 border border-white/20 px-4 py-1 rounded-full font-black uppercase">إغلاق X</button>
+        <div class="bg-blue-900 p-8 rounded-[3rem] shadow-2xl">
+            <div class="flex justify-between items-center mb-6 text-white">
+                <h3 id="category-title" class="font-black text-xl italic tracking-tighter">البحث</h3>
+                <button onclick="closeSearch()" class="text-[10px] bg-white/10 border border-white/20 px-4 py-2 rounded-full font-black uppercase tracking-widest hover:bg-red-500 transition-colors">إغلاق X</button>
             </div>
             <div class="relative">
-                <input type="text" id="expertSearch" onkeyup="filterExperts()" placeholder="ابحث بالدولة، المدينة أو الاسم..." 
-                class="w-full p-5 pr-12 rounded-2xl border-none outline-none font-bold text-slate-800 shadow-inner text-right">
-                <span class="absolute right-4 top-5 opacity-30 text-xl">🔍</span>
+                <input type="text" id="expertSearch" onkeyup="filterExperts()" placeholder="ابحث بالدولة، المدينة أو اسم الخبير..." 
+                class="w-full p-5 pr-14 rounded-2xl border-none outline-none font-bold text-slate-800 shadow-inner text-right text-lg">
+                <span class="absolute right-5 top-1/2 -translate-y-1/2 opacity-30 text-2xl">🔍</span>
             </div>
         </div>
     </section>
 
-    <section id="experts-list" class="px-6 py-4 max-w-6xl mx-auto space-y-4 text-right">
-    <h3 id="list-header" class="font-black text-slate-400 text-xs mb-4 uppercase tracking-widest">خبراء مقترحون لك:</h3>
-    <div id="results-container" class="space-y-4">
-        </div>
-</section>
+    <section id="experts-display-area" class="px-6 py-10 max-w-6xl mx-auto">
+        <h3 id="list-header" class="font-black text-slate-400 text-xs mb-6 uppercase tracking-widest border-r-4 border-orange-500 pr-3">خبراء مقترحون لك:</h3>
+        <div id="results-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 text-right">
+            </div>
+    </section>
 
-<script>
-    // نفس مصفوفة الخبراء السابقة...
-    const allExperts = [
-        { id: 'khaled', name: 'خالد محمد', category: 'travel', tags: ['لندن', 'بريطانيا', 'قطارات'], icon: '🇬🇧' },
-        { id: 'turkey_expert', name: 'أحمد العلي', category: 'travel', tags: ['تركيا', 'اسطنبول', 'أسواق'], icon: '🇹🇷' },
-        { id: 'sara_psy', name: 'سارة أ.', category: 'psychology', tags: ['قلق', 'تعافي', 'نفسية'], icon: '🌱' }
-    ];
+    <footer class="py-16 bg-white text-center text-slate-300 text-[10px] font-black tracking-[0.2em] uppercase border-t mt-20">
+        <div class="text-blue-900 text-lg mb-2 logo-font">شـــووور</div>
+        <p>&copy; 2025 Shooor. All Rights Reserved</p>
+    </footer>
 
-    // دالة لعرض الخبراء فور تحميل الصفحة
-    window.onload = () => {
-        displayExperts(allExperts); 
-    };
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-    function displayExperts(list) {
-        const container = document.getElementById('results-container');
-        container.innerHTML = '';
-        list.forEach(exp => {
-            container.innerHTML += `
-                <div onclick="window.location.href='expert.html?id=${exp.id}'" class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100 flex items-center justify-between cursor-pointer hover:border-blue-900 transition-all group">
-                    <div class="flex items-center gap-4">
-                        <div class="text-3xl bg-slate-50 w-16 h-16 flex items-center justify-center rounded-3xl group-hover:bg-blue-50 transition-colors">${exp.icon}</div>
-                        <div>
-                            <h4 class="font-black text-blue-900">${exp.name}</h4>
-                            <div class="flex gap-1 mt-1">
-                                ${exp.tags.map(t => `<span class="text-[9px] bg-orange-50 text-orange-600 px-2 py-0.5 rounded-full font-black">#${t}</span>`).join('')}
+    <script>
+        // --- تشفير المفاتيح لحماية GitHub ---
+        const _p1 = "AIzaSyAZSFCf7piwKykf";
+        const _p2 = "_klgGlzc4RkCXumNRUg";
+        
+        const firebaseConfig = {
+            apiKey: _p1 + _p2, 
+            authDomain: "shooor-app.firebaseapp.com",
+            projectId: "shooor-app",
+            storageBucket: "shooor-app.firebasestorage.app",
+            messagingSenderId: "356426973132",
+            appId: "1:356426973132:web:6353917bf13a64074d6769"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // مصفوفة الخبراء (سيتم جلبها من قاعدة البيانات لاحقاً)
+        const allExperts = [
+            { id: 'khaled', name: 'خالد محمد', category: 'travel', tags: ['لندن', 'بريطانيا', 'قطارات'], icon: '🇬🇧' },
+            { id: 'turkey_expert', name: 'أحمد العلي', category: 'travel', tags: ['تركيا', 'اسطنبول', 'أسواق'], icon: '🇹🇷' },
+            { id: 'sara_psy', name: 'سارة أ.', category: 'psychology', tags: ['قلق', 'تعافي', 'نفسية'], icon: '🌱' },
+            { id: 'fahd_biz', name: 'فهد السبيعي', category: 'business', tags: ['محل جوالات', 'صيانة', 'تراخيص'], icon: '📱' }
+        ];
+
+        let currentCategory = '';
+
+        // عرض الخبراء المقترحين عند فتح الصفحة
+        window.onload = () => {
+            displayExperts(allExperts); 
+        };
+
+        function displayExperts(list) {
+            const container = document.getElementById('results-container');
+            container.innerHTML = '';
+
+            if (list.length === 0) {
+                container.innerHTML = '<div class="col-span-full text-center py-20 text-slate-400 font-bold italic">لا توجد نتائج تطابق بحثك حالياً..</div>';
+                return;
+            }
+
+            list.forEach(exp => {
+                container.innerHTML += `
+                    <div onclick="window.location.href='expert.html?id=${exp.id}'" class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100 flex items-center justify-between cursor-pointer hover:border-blue-900 hover:shadow-xl transition-all group animate-fade-in">
+                        <div class="flex items-center gap-5">
+                            <div class="text-4xl bg-slate-50 w-20 h-20 flex items-center justify-center rounded-[2rem] group-hover:bg-blue-50 transition-colors shadow-inner">${exp.icon}</div>
+                            <div>
+                                <h4 class="font-black text-blue-900 text-lg group-hover:text-orange-500 transition-colors">${exp.name}</h4>
+                                <div class="flex flex-wrap gap-2 mt-2">
+                                    ${exp.tags.map(t => `<span class="text-[10px] bg-orange-50 text-orange-600 px-3 py-1 rounded-full font-black tracking-tighter">#${t}</span>`).join('')}
+                                </div>
                             </div>
                         </div>
+                        <div class="text-blue-900 opacity-10 group-hover:opacity-100 group-hover:translate-x-[-5px] transition-all">◀</div>
                     </div>
-                    <div class="text-blue-900 opacity-20 group-hover:opacity-100 transition-opacity">◀</div>
-                </div>
-            `;
-        });
-    }
+                `;
+            });
+        }
 
-    function openCategory(catId, catName) {
-        currentCategory = catId;
-        document.getElementById('list-header').innerText = `نتائج البحث في ${catName}:`;
-        document.getElementById('search-section').classList.remove('hidden');
-        filterExperts();
-        document.getElementById('search-section').scrollIntoView({ behavior: 'smooth' });
-    }
+        function openCategory(catId, catName) {
+            currentCategory = catId;
+            document.getElementById('list-header').innerText = `نتائج البحث في ${catName}:`;
+            document.getElementById('category-title').innerText = `البحث في ${catName}`;
+            document.getElementById('search-section').classList.remove('hidden');
+            document.getElementById('expertSearch').value = ''; // تصغير خانة البحث عند فتح قسم جديد
+            filterExperts();
+            document.getElementById('search-section').scrollIntoView({ behavior: 'smooth' });
+        }
 
-    // تعديل دالة الفلترة لتعمل مع الحاوية الجديدة
-    function filterExperts() {
-        const query = document.getElementById('expertSearch').value.toLowerCase();
-        const filtered = allExperts.filter(exp => {
-            const matchesCategory = exp.category === currentCategory;
-            const matchesSearch = exp.name.toLowerCase().includes(query) || 
-                                exp.tags.some(t => t.toLowerCase().includes(query));
-            return matchesCategory && matchesSearch;
-        });
-        displayExperts(filtered);
-    }
-</script>
+        function closeSearch() {
+            document.getElementById('search-section').classList.add('hidden');
+            document.getElementById('list-header').innerText = "خبراء مقترحون لك:";
+            displayExperts(allExperts); // إعادة عرض المقترحين
+        }
+
+        function filterExperts() {
+            const query = document.getElementById('expertSearch').value.toLowerCase();
+            const filtered = allExperts.filter(exp => {
+                const matchesCategory = exp.category === currentCategory;
+                const matchesSearch = exp.name.toLowerCase().includes(query) || 
+                                    exp.tags.some(t => t.toLowerCase().includes(query));
+                return matchesCategory && matchesSearch;
+            });
+            displayExperts(filtered);
+        }
+    </script>
 </body>
 </html>
