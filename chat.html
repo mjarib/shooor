@@ -5,39 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>غرفة الاستشارة | شـــووور</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; }
+        body { font-family: 'Tajawal', sans-serif; overflow: hidden; }
+        .timer-glow { animation: blink 1s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
     </style>
 </head>
-<body class="bg-slate-100 overflow-hidden">
+<body class="bg-slate-100">
 
-    <div class="max-w-2xl mx-auto h-screen flex flex-col shadow-2xl bg-white">
-        <div class="bg-blue-900 text-white p-5 flex justify-between items-center z-10">
-            <div>
-                <h1 class="font-bold text-lg">محادثة الاستشارة</h1>
-                <p class="text-[10px] text-blue-200 uppercase tracking-widest">Shooor Secure Chat System</p>
+    <div class="max-w-2xl mx-auto h-screen flex flex-col shadow-2xl bg-white relative">
+        
+        <div class="bg-blue-900 text-white p-4 flex justify-between items-center z-10 border-b border-blue-800">
+            <div class="flex items-center gap-3">
+                <div class="bg-orange-500 p-2 rounded-lg">
+                    <span id="timer" class="font-black text-lg tracking-tighter">30:00</span>
+                </div>
+                <div>
+                    <h1 class="font-bold text-sm">محادثة الاستشارة</h1>
+                    <div class="flex items-center gap-1">
+                        <span class="w-2 h-2 bg-green-500 rounded-full timer-glow"></span>
+                        <p class="text-[9px] text-blue-200 uppercase">جلسة نشطة الآن</p>
+                    </div>
+                </div>
             </div>
-            <a href="index.html" class="text-xs bg-red-500/20 hover:bg-red-500 border border-red-500/50 px-4 py-2 rounded-xl transition-all">إغلاق الغرفة</a>
+            <button onclick="confirmExit()" class="text-xs bg-white/10 hover:bg-red-600 border border-white/20 px-4 py-2 rounded-xl transition-all">إنهاء الجلسة</button>
         </div>
 
-        <div class="bg-orange-50 p-3 text-center border-b border-orange-100 text-orange-800 text-[11px] font-bold">
-            ⚠️ تنبيه: المحادثة مراقبة لضمان جودة الخدمة. يمنع مشاركة البيانات البنكية أو أرقام التواصل.
+        <div id="safety-bar" class="bg-orange-50 p-3 text-center border-b border-orange-100 text-orange-800 text-[10px] font-bold">
+            ⚠️ المحادثة مراقبة. تنتهي الجلسة تلقائياً عند انتهاء الوقت.
         </div>
 
-        <div class="flex-grow w-full relative">
+        <div id="chat-container" class="flex-grow w-full relative bg-slate-50">
+            <div id="loading-screen" class="absolute inset-0 flex flex-col items-center justify-center bg-white z-20">
+                <div class="w-12 h-12 border-4 border-blue-900 border-t-transparent rounded-full animate-spin mb-4"></div>
+                <p class="text-sm font-bold text-blue-900">جاري إعداد غرفة آمنة...</p>
+            </div>
+            
             <iframe 
+                id="chat-frame"
                 src="https://minnit.chat/PublicChat?embed&nickname=" 
-                style="border:none; width:100%; height:100%;" 
+                style="border:none; width:100%; height:100%; display:none;" 
                 allowTransparency="true"
                 allow="geolocation; microphone; camera; display-capture">
             </iframe>
         </div>
 
-        <div class="p-2 text-center text-slate-400 text-[9px] font-bold bg-slate-50 border-t">
-            نظام محادثات شـــووور المشفر &copy; 2025
+        <div class="p-2 text-center text-slate-400 text-[9px] font-bold bg-white border-t flex justify-center gap-4">
+            <span>&copy; شـــووور 2025</span>
+            <span class="text-blue-900">نظام تشفير متطور</span>
         </div>
     </div>
 
+    <script>
+        // إعدادات الوقت (30 دقيقة)
+        let totalSeconds = 30 * 60;
+        const timerElement = document.getElementById('timer');
+        const chatFrame = document.getElementById('chat-frame');
+        const loadingScreen = document.getElementById('loading-screen');
+
+        // وظيفة تشغيل العداد
+        function startTimer() {
+            const interval = setInterval(() => {
+                let minutes = Math.floor(totalSeconds / 60);
+                let seconds = totalSeconds % 60;
+
+                // تنسيق العرض
+                timerElement.innerText = 
+                    `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+
+                if (totalSeconds <= 0) {
+                    clearInterval(interval);
+                    endSession();
+                } else {
+                    totalSeconds--;
+                    // تغيير لون العداد للأحمر في آخر دقيقتين
+                    if (totalSeconds < 120) timerElement.parentElement.classList.replace('bg-orange-500', 'bg-red-600');
+                }
+            }, 1000);
+        }
+
+        // محاكاة بدء الجلسة (يمكن ربطها بموافقة الخبير والدفع لاحقاً)
+        window.onload = () => {
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                chatFrame.style.display = 'block';
+                startTimer();
+            }, 2000); // تأخير بسيط للمحاكاة
+        };
+
+        function endSession() {
+            alert("انتهى الوقت المحدد للاستشارة. شكراً لاستخدامك شـــووور.");
+            window.location.href = "index.html";
+        }
+
+        function confirmExit() {
+            if(confirm("هل أنت متأكد من إنهاء الجلسة؟ لن تتمكن من العودة إلا بطلب جديد.")) {
+                window.location.href = "index.html";
+            }
+        }
+    </script>
 </body>
 </html>
