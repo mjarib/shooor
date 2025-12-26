@@ -15,8 +15,6 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
         .whatsapp-btn { animation: pulse 2s infinite; }
-        .category-card { transition: all 0.3s ease; }
-        .category-card:hover { transform: translateY(-5px); border-color: #1e3a8a; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900">
@@ -32,7 +30,7 @@
                 <div class="text-[10px] font-bold text-orange-500 tracking-[0.2em] uppercase">Shooor</div>
             </div>
             <div class="flex gap-2">
-                <a href="#customer-register" class="bg-blue-100 text-blue-900 px-4 py-2 rounded-full text-xs font-black">حسابي</a>
+                <button onclick="loginWithGoogle()" class="bg-blue-100 text-blue-900 px-4 py-2 rounded-full text-xs font-black">حسابي</button>
                 <a href="join.html" class="bg-blue-900 text-white px-4 py-2 rounded-full text-xs font-black">انضم كخبير</a>
             </div>
         </div>
@@ -46,19 +44,19 @@
     <section class="px-6 py-8 max-w-6xl mx-auto">
         <h2 class="text-xl font-black text-blue-900 mb-6 italic tracking-tighter">اطلب الشور في:</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            <button onclick="openCategory('travel', 'السفر السياحي')" class="category-card bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100">
+            <button onclick="openCategory('travel', 'السفر السياحي')" class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100 hover:border-blue-900 transition-all">
                 <div class="text-3xl mb-2">🌍</div>
                 <span class="font-black text-blue-900 text-sm block">السفر</span>
             </button>
-            <button onclick="openCategory('psychology', 'تجارب نفسية')" class="category-card bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100">
+            <button onclick="openCategory('psychology', 'تجارب نفسية')" class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100 hover:border-blue-900 transition-all">
                 <div class="text-3xl mb-2">🧠</div>
                 <span class="font-black text-blue-900 text-sm block">نفسية</span>
             </button>
-            <button onclick="openCategory('business', 'بناء المشاريع')" class="category-card bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100">
+            <button onclick="openCategory('business', 'بناء المشاريع')" class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100 hover:border-blue-900 transition-all">
                 <div class="text-3xl mb-2">💼</div>
                 <span class="font-black text-blue-900 text-sm block">مشاريع</span>
             </button>
-            <button onclick="openCategory('life', 'تجارب عامة')" class="category-card bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100">
+            <button onclick="openCategory('life', 'تجارب عامة')" class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100 hover:border-blue-900 transition-all">
                 <div class="text-3xl mb-2">💡</div>
                 <span class="font-black text-blue-900 text-sm block">أخرى</span>
             </button>
@@ -85,7 +83,7 @@
             </div>
     </section>
 
-    <footer class="py-12 bg-white text-center text-slate-400 text-[10px] font-black tracking-[0.2em] border-t mt-20">
+    <footer class="py-12 bg-white text-center text-slate-400 text-[10px] font-black border-t mt-20">
         <p>&copy; 2025 شـــووور - Shooor</p>
     </footer>
 
@@ -98,6 +96,14 @@
         const firebaseConfig = { apiKey: _p1 + _p2, authDomain: "shooor-app.firebaseapp.com", projectId: "shooor-app" };
         firebase.initializeApp(firebaseConfig);
 
+        // وظيفة تسجيل الدخول الأصلية التي طلبتها سابقاً
+        function loginWithGoogle() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup(provider)
+                .then((result) => { alert("أهلاً بك " + result.user.displayName); })
+                .catch((error) => { console.error(error); });
+        }
+
         const allExperts = [
             { id: 'khaled', name: 'خالد محمد', category: 'travel', tags: ['لندن', 'بريطانيا', 'قطارات'], icon: '🇬🇧' },
             { id: 'turkey_expert', name: 'أحمد العلي', category: 'travel', tags: ['تركيا', 'اسطنبول', 'أسواق'], icon: '🇹🇷' },
@@ -105,7 +111,6 @@
         ];
 
         let currentCategory = '';
-
         window.onload = () => { displayExperts(allExperts); };
 
         function displayExperts(list) {
