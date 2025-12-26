@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بروفايل الخبير | شـــووور</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-slate-50 text-slate-900 font-[Tajawal]">
+    <div class="max-w-md mx-auto bg-white min-h-screen shadow-lg relative">
+        <div id="profile-header-bg" class="h-32 bg-blue-900"></div>
+        
+        <div class="px-6 -mt-12 text-center">
+            <div id="expert-icon" class="w-24 h-24 bg-white border-4 border-white rounded-full mx-auto flex items-center justify-center text-4xl shadow-md">
+                👤
+            </div>
+            <h1 id="expert-name" class="text-2xl font-black mt-4 text-blue-900 italic">جاري التحميل...</h1>
+            <div id="expert-tags" class="flex flex-wrap justify-center gap-2 mt-2">
+                </div>
+        </div>
+
+        <div class="p-8 space-y-6">
+            <div class="bg-slate-50 p-6 rounded-[2rem] border border-slate-100 text-right">
+                <h3 class="font-black text-xs text-orange-500 mb-2 uppercase tracking-widest">عن الخبير والشور:</h3>
+                <p id="expert-detail" class="text-sm leading-relaxed text-slate-600 font-bold">
+                    تحميل تفاصيل التجربة...
+                </p>
+            </div>
+
+            <button onclick="goToChat()" class="block w-full bg-blue-900 text-white text-center py-5 rounded-2xl font-black shadow-xl hover:bg-blue-800 transition-all transform hover:scale-[1.02]">
+                اطلب الشور الآن
+            </button>
+            
+            <a href="index.html" class="block text-center text-slate-400 text-[10px] font-black uppercase tracking-widest">العودة للرئيسية</a>
+        </div>
+    </div>
+
+    <script>
+        // محاكاة جلب البيانات (لاحقاً سيتم جلبها من Firestore)
+        const expertsData = {
+            "khaled": {
+                name: "خالد محمد",
+                tags: ["خبير بريطانيا", "مستشار قطارات", "لندن وأريافها"],
+                detail: "زرت لندن أكثر من 10 مرات، خبير في أماكن السكن العائلية، وتنسيق التنقل بالقطارات. أعطيك الشور في كيفية توفير ميزانية السفر.",
+                icon: "🇬🇧"
+            },
+            "turkey_expert": {
+                name: "أحمد العلي",
+                tags: ["خبير تركيا", "أسواق اسطنبول", "راعي غنم"],
+                detail: "عشت في الشمال التركي وأعرف خفايا القرى والأسواق الشعبية. أعلمك كيف تستمتع بتركيا بعيداً عن الاستغلال السياحي.",
+                icon: "🇹🇷"
+            }
+        };
+
+        // دالة قراءة المعرف من الرابط (مثلاً expert.html?id=khaled)
+        const urlParams = new URLSearchParams(window.location.search);
+        const expertId = urlParams.get('id') || 'khaled';
+        const data = expertsData[expertId];
+
+        if (data) {
+            document.getElementById('expert-name').innerText = data.name;
+            document.getElementById('expert-detail').innerText = data.detail;
+            document.getElementById('expert-icon').innerText = data.icon;
+            
+            // إضافة العناوين (Tags)
+            const tagsContainer = document.getElementById('expert-tags');
+            data.tags.forEach(tag => {
+                tagsContainer.innerHTML += `<span class="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-[10px] font-black">#${tag}</span>`;
+            });
+        }
+
+        function goToChat() {
+            window.location.href = `chat.html?expert=${expertId}`;
+        }
+    </script>
+</body>
+</html>
