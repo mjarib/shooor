@@ -11,6 +11,8 @@
         .logo-font { font-weight: 900; letter-spacing: -1px; }
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); }
         .category-btn.active { background-color: #1e3a8a !important; color: white !important; }
+        .experience-card { transition: all 0.3s ease; border: 2px solid transparent; }
+        .experience-card:hover { border-color: #f97316; transform: translateY(-5px); }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900">
@@ -38,12 +40,13 @@
             </div>
             <div class="flex gap-2">
                 <a href="#customer-register" id="header-user-btn" class="bg-blue-100 text-blue-900 px-4 py-2 rounded-full text-xs font-black">حسابي</a>
+                <a href="#join-expert-section" class="bg-blue-900 text-white px-4 py-2 rounded-full text-xs font-black hover:bg-orange-500 transition-colors">انضم كخبير</a>
             </div>
         </div>
     </header>
 
     <section class="py-12 px-6 text-center bg-white">
-        <h1 class="text-4xl md:text-5xl font-black mb-4 text-blue-900">ابحث عن شخص <span class="text-orange-500 underline underline-offset-8">عاش</span> تجربتك</h1>
+        <h1 class="text-4xl md:text-5xl font-black mb-4 text-blue-900 leading-tight">ابحث عن شخص <span class="text-orange-500 underline underline-offset-8">عاش</span> تجربتك</h1>
         <p class="text-slate-500 font-bold max-w-xl mx-auto text-sm">منصة الاستشارات التي تنقل لك الواقع كما هو.</p>
     </section>
 
@@ -73,13 +76,13 @@
             <div id="auth-container" class="text-center">
                 <h3 class="text-2xl font-black mb-8 text-blue-900 italic">سجل دخولك الآن</h3>
                 <div id="auth-options" class="space-y-4">
-                    <button onclick="loginWithGoogle()" class="w-full flex items-center justify-center gap-3 bg-white border-2 py-4 rounded-2xl font-bold hover:bg-slate-50">
+                    <button onclick="loginWithGoogle()" class="w-full flex items-center justify-center gap-3 bg-white border-2 py-4 rounded-2xl font-bold hover:bg-slate-50 transition-all">
                         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-6 h-6"> الدخول عبر Google
                     </button>
-                    <div class="py-2 text-slate-400 text-[10px] font-black uppercase">أو عبر الجوال</div>
+                    <div class="py-2 text-slate-400 text-[10px] font-black uppercase tracking-widest">أو عبر الجوال</div>
                     <div class="flex gap-2" dir="ltr">
                         <span class="bg-slate-100 p-4 rounded-2xl font-bold text-slate-400">+966</span>
-                        <input type="tel" id="phone-input" placeholder="5xxxxxxxx" class="w-full p-4 bg-slate-50 rounded-2xl text-left outline-none border-2 border-transparent focus:border-blue-900">
+                        <input type="tel" id="phone-input" placeholder="5xxxxxxxx" class="w-full p-4 bg-slate-50 rounded-2xl text-left outline-none">
                     </div>
                     <button onclick="setupRecaptcha()" class="w-full bg-blue-900 text-white py-4 rounded-2xl font-black shadow-lg">إرسال كود التحقق</button>
                 </div>
@@ -91,7 +94,7 @@
             </div>
 
             <div id="user-profile" class="hidden text-center">
-                <div id="user-photo" class="w-20 h-20 rounded-full mx-auto mb-4 bg-blue-50 flex items-center justify-center text-2xl overflow-hidden shadow-inner border-4 border-white">👤</div>
+                <div id="user-photo" class="w-20 h-20 rounded-full mx-auto mb-4 bg-blue-50 flex items-center justify-center text-2xl overflow-hidden shadow-inner border-4 border-white ring-4 ring-slate-100">👤</div>
                 <h3 id="display-name" class="text-xl font-black mb-6 text-blue-900 italic">أهلاً بك</h3>
                 <div class="bg-slate-900 p-8 rounded-[2rem] text-right text-white shadow-2xl relative overflow-hidden">
                     <p class="text-blue-400 text-[10px] font-bold mb-1 uppercase tracking-widest">الرصيد المتاح</p>
@@ -103,8 +106,44 @@
         </div>
     </section>
 
+    <section id="join-expert-section" class="py-16 bg-white px-6 text-right border-t">
+        <div class="max-w-2xl mx-auto">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-black text-blue-900 mb-2 italic">كن أحد خبراء شـــووور</h2>
+                <p class="text-slate-500 font-bold text-sm">شارك تجربتك، ساعد الآخرين، وابدأ بجني الأرباح</p>
+            </div>
+            <form id="expert-form" onsubmit="handleExpertSubmit(event)" class="space-y-6 bg-slate-50 p-8 md:p-12 rounded-[3rem] border border-slate-100 shadow-sm transition-all">
+                <div>
+                    <label class="block text-blue-900 font-black mb-2 mr-2 text-sm">الاسم الكامل</label>
+                    <input type="text" id="exp-name" required class="w-full p-4 rounded-2xl border-none outline-none shadow-inner focus:ring-2 focus:ring-orange-500" placeholder="اكتب اسمك الثلاثي">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-blue-900 font-black mb-2 mr-2 text-sm">مجال الخبرة</label>
+                        <select id="exp-category" required class="w-full p-4 rounded-2xl border-none outline-none shadow-inner focus:ring-2 focus:ring-orange-500 bg-white font-bold">
+                            <option value="سفر">السفر</option>
+                            <option value="نفسية">تجربة نفسية</option>
+                            <option value="مشاريع">المشاريع</option>
+                            <option value="مشتريات">المشتريات</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-blue-900 font-black mb-2 mr-2 text-sm">رقم الجوال</label>
+                        <input type="tel" id="exp-phone" required class="w-full p-4 rounded-2xl border-none outline-none shadow-inner focus:ring-2 focus:ring-orange-500 text-left" placeholder="05xxxxxxxx">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-blue-900 font-black mb-2 mr-2 text-sm">نبذة عن تجربتك</label>
+                    <textarea id="exp-detail" required rows="4" class="w-full p-4 rounded-2xl border-none outline-none shadow-inner focus:ring-2 focus:ring-orange-500" placeholder="اشرح باختصار التجربة التي تريد تقديم الشور فيها..."></textarea>
+                </div>
+                <button type="submit" id="submit-expert-btn" class="w-full bg-blue-900 text-white py-5 rounded-2xl font-black shadow-lg hover:bg-orange-500 transition-all transform hover:scale-[1.02]">إرسال طلب الانضمام</button>
+                <p id="form-status" class="text-center text-xs font-black text-green-600 hidden animate-bounce">تم إرسال طلبك بنجاح!</p>
+            </form>
+        </div>
+    </section>
+
     <footer class="py-12 bg-white text-center text-slate-400 text-[10px] font-black tracking-[0.2em] uppercase border-t">
-        <p>&copy; 2025 شـــووور - Shooor</p>
+        <p>&copy; 2025 شـــووور - Shooor | خذ الشور من مجرّب</p>
     </footer>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -138,14 +177,14 @@
                         <div>
                             <div class="flex justify-between items-start mb-4">
                                 <span class="text-4xl">${exp.icon}</span>
-                                <span class="text-[10px] bg-blue-50 text-blue-600 px-3 py-1 rounded-full font-black">#${exp.tag}</span>
+                                <span class="text-[10px] bg-blue-50 text-blue-600 px-3 py-1 rounded-full font-black uppercase tracking-widest">#${exp.tag}</span>
                             </div>
-                            <h3 class="text-xl font-black text-blue-900 mb-3">${exp.title}</h3>
-                            <p class="text-sm text-slate-500 font-bold">${exp.detail}</p>
+                            <h3 class="text-xl font-black text-blue-900 mb-3 leading-tight">${exp.title}</h3>
+                            <p class="text-sm text-slate-500 font-bold leading-relaxed">${exp.detail}</p>
                         </div>
                         <div class="mt-8 pt-6 border-t border-slate-50 flex justify-between items-center">
-                            <span class="text-[10px] font-black text-slate-400 italic">بواسطة: ${exp.name}</span>
-                            <button onclick="goToChat('${exp.name}', event)" class="bg-blue-900 text-white px-5 py-2 rounded-xl text-xs font-black shadow-lg">اطلب الشور</button>
+                            <span class="text-[10px] font-black text-slate-400">بواسطة: ${exp.name}</span>
+                            <button onclick="goToChat('${exp.name}', event)" class="bg-blue-900 text-white px-5 py-2 rounded-xl text-xs font-black shadow-lg hover:bg-orange-500 transition-all">اطلب الشور</button>
                         </div>
                     </div>
                 `;
@@ -159,38 +198,28 @@
                 document.getElementById('customer-register').scrollIntoView({ behavior: 'smooth' });
                 return;
             }
-            const btn = event.target;
-            btn.innerText = "جاري الإرسال...";
-            btn.disabled = true;
+            const btn = event.target; btn.innerText = "جاري الإرسال..."; btn.disabled = true;
             try {
                 const requestRef = await db.collection("consultations").add({
-                    userId: user.uid,
-                    userName: user.displayName || user.phoneNumber || "مستخدم",
-                    expertName: expertName,
-                    status: "pending",
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    userId: user.uid, userName: user.displayName || user.phoneNumber || "مستخدم",
+                    expertName: expertName, status: "pending", createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 window.location.href = `waiting.html?requestId=${requestRef.id}&expert=${encodeURIComponent(expertName)}`;
-            } catch (error) {
-                alert("حدث خطأ.");
-                btn.innerText = "اطلب الشور";
-                btn.disabled = false;
-            }
+            } catch (error) { alert("حدث خطأ."); btn.innerText = "اطلب الشور"; btn.disabled = false; }
         }
 
         function filterExperiences(cat, btn) {
             document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            const filtered = allExperiences.filter(exp => exp.category === cat);
-            renderExperiences(filtered);
+            renderExperiences(allExperiences.filter(exp => exp.category === cat));
         }
 
         function openRechargeModal() { document.getElementById('recharge-modal').style.display = 'flex'; }
         function closeRechargeModal() { document.getElementById('recharge-modal').style.display = 'none'; }
         
+        // تسجيل الدخول بقوقل - باستخدام redirect لتجنب مشاكل النوافذ
         function loginWithGoogle() {
             const provider = new firebase.auth.GoogleAuthProvider();
-            // طلب الصلاحيات الأساسية التي تظهر فارغة في صورتك
             provider.addScope('profile');
             provider.addScope('email');
             auth.signInWithRedirect(provider);
@@ -200,12 +229,12 @@
             if (user) {
                 document.getElementById('auth-container').classList.add('hidden');
                 document.getElementById('user-profile').classList.remove('hidden');
-                document.getElementById('display-name').innerText = user.displayName || "مرحباً بك";
+                document.getElementById('header-user-btn').innerText = "ملفي الشخصي";
+                document.getElementById('display-name').innerText = user.displayName || "أهلاً بك";
                 if(user.photoURL) document.getElementById('user-photo').innerHTML = `<img src="${user.photoURL}" class="w-full h-full object-cover">`;
             }
         });
 
-        // دوال الجوال (مختصرة)
         function setupRecaptcha() {
             window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', { size: 'invisible' });
             const phone = "+966" + document.getElementById('phone-input').value;
@@ -213,15 +242,33 @@
                 confirmationResult = res;
                 document.getElementById('auth-options').classList.add('hidden');
                 document.getElementById('otp-section').classList.remove('hidden');
-            });
+            }).catch(e => { alert("خطأ: " + e.message); location.reload(); });
         }
 
         function verifyCode() {
-            const code = document.getElementById('otp-input').value;
-            confirmationResult.confirm(code).then(() => location.reload());
+            confirmationResult.confirm(document.getElementById('otp-input').value).then(() => location.reload());
         }
 
         function handleSignOut() { auth.signOut().then(() => location.reload()); }
+
+        async function handleExpertSubmit(event) {
+            event.preventDefault();
+            const btn = document.getElementById('submit-expert-btn');
+            const expertData = {
+                name: document.getElementById('exp-name').value,
+                category: document.getElementById('exp-category').value,
+                phone: document.getElementById('exp-phone').value,
+                detail: document.getElementById('exp-detail').value,
+                submittedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            btn.disabled = true; btn.innerText = "جاري الإرسال...";
+            try {
+                await db.collection("experts_requests").add(expertData);
+                document.getElementById('form-status').classList.remove('hidden');
+                btn.innerText = "تم الإرسال ✅";
+                event.target.reset();
+            } catch (error) { alert("حدث خطأ."); btn.disabled = false; }
+        }
 
         renderExperiences(allExperiences);
     </script>
