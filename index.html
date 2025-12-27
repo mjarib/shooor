@@ -176,9 +176,9 @@
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
     <script>
-        // إعدادات Firebase الأصلية
         const firebaseConfig = {
             apiKey: "AIzaSyAZSFCf7piwKykf_klgGlzc4RkCXumNRUg",
             authDomain: "shooor-app.firebaseapp.com",
@@ -189,6 +189,7 @@
         };
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
+        const db = firebase.firestore(); // تعريف قاعدة البيانات
         let confirmationResult;
 
         const allExperiences = [
@@ -287,24 +288,40 @@
 
         function handleSignOut() { auth.signOut().then(() => location.reload()); }
 
-        // --- وظيفة نموذج الانضمام كخبير (التعديل الجديد) ---
-        function handleExpertSubmit(event) {
+        // --- وظيفة إرسال طلبات الانضمام إلى Firestore ---
+        async function handleExpertSubmit(event) {
             event.preventDefault();
             const status = document.getElementById('form-status');
             const btn = document.getElementById('submit-expert-btn');
 
+            // تجميع البيانات
+            const expertData = {
+                name: document.getElementById('exp-name').value,
+                category: document.getElementById('exp-category').value,
+                phone: document.getElementById('exp-phone').value,
+                detail: document.getElementById('exp-detail').value,
+                submittedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
             btn.disabled = true;
             btn.innerText = "جاري إرسال طلبك...";
 
-            // سيتم ربطها بـ Firestore لاحقاً لتخزين البيانات
-            setTimeout(() => {
+            try {
+                // الحفظ في كولكشن experts_requests
+                await db.collection("experts_requests").add(expertData);
+                
                 status.classList.remove('hidden');
                 btn.innerText = "تم الإرسال بنجاح ✅";
                 btn.classList.replace('bg-blue-900', 'bg-green-600');
                 event.target.reset();
                 
-                alert("شكراً لانضمامك! تم استلام طلبك وسنقوم بمراجعته قريباً.");
-            }, 1500);
+                alert("رائع! تم حفظ طلبك وسنتواصل معك قريباً.");
+            } catch (error) {
+                console.error("Error: ", error);
+                btn.disabled = false;
+                btn.innerText = "إرسال طلب الانضمام";
+                alert("حدث خطأ أثناء الإرسال. تأكد من إعدادات Firestore.");
+            }
         }
 
         renderExperiences(allExperiences);
