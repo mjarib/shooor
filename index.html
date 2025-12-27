@@ -89,7 +89,7 @@
 
     <section class="px-6 pb-20 max-w-6xl mx-auto">
         <div id="experiences-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-right">
-            </div>
+        </div>
     </section>
 
     <section id="customer-register" class="py-16 bg-slate-100 px-6 text-right border-y">
@@ -192,8 +192,6 @@
         const db = firebase.firestore();
         let confirmationResult;
 
-        // مصفوفة الخبراء - قمت بحذف الخبراء الوهميين
-        // يمكنك الآن إضافة خالد الحسنين أو أي خبير تعتمده هنا
         const allExperiences = [
              { category: 'نفسية', title: 'خبير في التعامل مع الحالات النفسية والسفر', detail: 'خضت تجربة التعافي النفسي وأساعدك في التخطيط لرحلات علاجية ونفسية مريحة.', icon: '🧠', name: 'خالد الحسنين', tag: 'نفسية' }
         ];
@@ -220,16 +218,43 @@
                         </div>
                         <div class="mt-8 pt-6 border-t border-slate-50 flex justify-between items-center">
                             <span class="text-[10px] font-black text-slate-400 uppercase tracking-tighter">بواسطة: ${exp.name}</span>
-                            <button onclick="goToChat('${exp.name}')" class="bg-blue-900 text-white px-5 py-2 rounded-xl text-xs font-black shadow-lg hover:bg-orange-500 transition-colors">اطلب الشور</button>
+                            <button onclick="goToChat('${exp.name}', event)" class="bg-blue-900 text-white px-5 py-2 rounded-xl text-xs font-black shadow-lg hover:bg-orange-500 transition-colors">اطلب الشور</button>
                         </div>
                     </div>
                 `;
             });
         }
 
-        function goToChat(expertName) {
-            const encodedName = encodeURIComponent(expertName);
-            window.location.href = `chat.html?expert=${encodedName}`;
+        // الدالة المحدثة لإنشاء طلب استشارة وانتظار الموافقة
+        async function goToChat(expertName, event) {
+            const user = auth.currentUser;
+            if (!user) {
+                alert("يرجى تسجيل الدخول أولاً لطلب الشور.");
+                document.getElementById('customer-register').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = "جاري إرسال الطلب...";
+            btn.disabled = true;
+
+            try {
+                const requestRef = await db.collection("consultations").add({
+                    userId: user.uid,
+                    userName: user.displayName || "مستخدم",
+                    expertName: expertName,
+                    status: "pending",
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                window.location.href = `waiting.html?requestId=${requestRef.id}&expert=${encodeURIComponent(expertName)}`;
+            } catch (error) {
+                console.error("Error creating request: ", error);
+                alert("حدث خطأ أثناء إرسال الطلب.");
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
         }
 
         function filterExperiences(cat, btn) {
