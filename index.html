@@ -225,7 +225,6 @@
             });
         }
 
-        // الدالة المحدثة لإنشاء طلب استشارة وانتظار الموافقة
         async function goToChat(expertName, event) {
             const user = auth.currentUser;
             if (!user) {
@@ -305,8 +304,8 @@
 
         function loginWithGoogle() { 
             const provider = new firebase.auth.GoogleAuthProvider();
-            provider.setCustomParameters({ prompt: 'select_account' });
-            auth.signInWithPopup(provider).catch(err => console.error(err));
+            // استخدامsignInWithRedirect بدلاً من signInWithPopup لحل مشكلة إغلاق النافذة المفاجئ
+            auth.signInWithRedirect(provider);
         }
 
         auth.onAuthStateChanged(user => {
