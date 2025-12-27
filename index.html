@@ -302,26 +302,19 @@
             });
         }
 
-        // دالة تسجيل الدخول المحدثة باستخدام Popup مع معالجة الأخطاء
+        // محاولة تسجيل الدخول باستخدام popup أولاً، وإذا فشل نستخدم redirect
         function loginWithGoogle() { 
             const provider = new firebase.auth.GoogleAuthProvider();
             provider.setCustomParameters({ prompt: 'select_account' });
             
             auth.signInWithPopup(provider)
-                .then((result) => {
-                    console.log("تم تسجيل الدخول بنجاح!");
-                })
                 .catch((error) => {
-                    console.error("Login Error: ", error.message);
-                    // إذا فشل الـ Popup (مثلاً بسبب حظر المتصفح)، نستخدم الـ Redirect كحل بديل
-                    if (error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request') {
-                        auth.signInWithRedirect(provider);
-                    } else {
-                        alert("حدث خطأ أثناء تسجيل الدخول: " + error.message);
-                    }
+                    console.log("Popup فشل، نستخدم التحويل المباشر...");
+                    auth.signInWithRedirect(provider);
                 });
         }
 
+        // مراقبة الحالة ومعالجة العودة من التحويل
         auth.onAuthStateChanged(user => {
             if (user) {
                 document.getElementById('auth-container').classList.add('hidden');
@@ -330,6 +323,11 @@
                 document.getElementById('display-name').innerText = "أهلاً، " + (user.displayName || "بك");
                 if(user.photoURL) document.getElementById('user-photo').innerHTML = `<img src="${user.photoURL}" class="w-full h-full object-cover">`;
             }
+        });
+
+        // التقاط نتيجة Redirect عند العودة للصفحة
+        auth.getRedirectResult().catch((error) => {
+            console.error("خطأ في العودة من قوقل: ", error.message);
         });
 
         function handleSignOut() { auth.signOut().then(() => location.reload()); }
