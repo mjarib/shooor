@@ -3,101 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم | شـــووور</title>
+    <title>إدارة شـــووور | المركز الرئيسي</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>body { font-family: 'Tajawal', sans-serif; }</style>
 </head>
-<body class="bg-slate-100 p-4 md:p-8">
+<body class="bg-slate-900 text-slate-100 min-h-screen">
 
-    <div class="max-w-5xl mx-auto">
-        <div class="flex justify-between items-center mb-8 bg-blue-900 p-6 rounded-[2rem] text-white shadow-xl">
-            <div>
-                <h1 class="text-2xl font-black">لوحة إدارة شـــووور</h1>
-                <p class="text-xs text-blue-200 uppercase tracking-widest">Control Panel v1.0</p>
-            </div>
-            <div class="text-left">
-                <span class="bg-orange-500 px-4 py-1 rounded-full text-[10px] font-black uppercase">المدير العام</span>
-            </div>
+    <nav class="border-b border-slate-800 p-6 flex justify-between items-center bg-slate-900 sticky top-0 z-50">
+        <h1 class="text-2xl font-black italic">لوحة الإدارة المركزية</h1>
+        <div class="flex gap-4">
+            <span class="bg-green-500/10 text-green-500 px-4 py-1 rounded-full text-[10px] font-black border border-green-500/20 uppercase">النظام يعمل</span>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-slate-800 p-6 rounded-[2rem] border border-slate-700">
+            <p class="text-slate-400 text-xs font-bold mb-1">إجمالي العمليات المدفوعة</p>
+            <h2 id="total-paid" class="text-3xl font-black text-orange-500">جاري الحساب..</h2>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 text-right">
-            
-            <div class="lg:col-span-2 space-y-6">
-                <h2 class="text-xl font-black text-blue-900 flex items-center gap-2">
-                    <span class="w-3 h-3 bg-orange-500 rounded-full animate-pulse"></span>
-                    طلبات انضمام بانتظار الاعتماد
-                </h2>
-
-                <div id="pending-list" class="space-y-4">
-                    <div class="bg-white p-6 rounded-[2.5rem] shadow-sm border-2 border-transparent hover:border-blue-900 transition-all">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-2xl">👤</div>
-                                <div>
-                                    <h3 class="font-black text-blue-900">محمد العتيبي</h3>
-                                    <p class="text-xs text-slate-400">050XXXXXXX</p>
-                                </div>
-                            </div>
-                            <span class="text-[10px] bg-orange-50 text-orange-600 px-3 py-1 rounded-full font-bold italic underline">طلب معلق</span>
-                        </div>
-                        <p class="text-sm text-slate-600 mb-6 bg-slate-50 p-4 rounded-2xl">"أرغب في تقديم استشارات حول تربية النحل وإنتاج العسل في المناطق الجبلية."</p>
-                        
-                        <div class="space-y-4 border-t pt-4">
-                            <div>
-                                <label class="block text-[10px] font-black text-slate-400 mb-2 uppercase">أضف عناوين الخبرة (افصل بينها بفاصلة)</label>
-                                <input type="text" id="tags-input-1" placeholder="خبير عسل، نحال، جبال السروات" class="w-full p-3 bg-slate-50 rounded-xl text-sm outline-none border focus:border-blue-900">
-                            </div>
-                            <div class="flex gap-2">
-                                <button onclick="approveExpert(1, 'محمد العتيبي')" class="flex-grow bg-blue-900 text-white py-3 rounded-xl font-black text-xs shadow-lg hover:bg-green-600 transition-all">✅ اعتماد ونشر في الموقع</button>
-                                <button class="bg-red-50 text-red-500 px-4 py-3 rounded-xl font-black text-xs">رفض</button>
-                            </div>
-                        </div>
-                    </div>
+        <div class="md:col-span-2 bg-white text-slate-900 p-8 rounded-[2.5rem]">
+            <h3 class="font-black text-xl mb-6 flex justify-between items-center">
+                الجلسات النشطة الآن
+                <span class="text-[10px] bg-blue-100 px-3 py-1 rounded-full text-blue-600">بث مباشر</span>
+            </h3>
+            <div id="live-sessions" class="space-y-3">
                 </div>
-            </div>
-
-            <div class="space-y-6">
-                <h2 class="text-xl font-black text-blue-900">إحصائيات المنصة</h2>
-                <div class="bg-white p-6 rounded-[2.5rem] shadow-sm space-y-4">
-                    <div class="p-4 bg-blue-50 rounded-2xl">
-                        <p class="text-[10px] text-blue-400 font-black uppercase">إجمالي الخبراء المعتمدين</p>
-                        <h4 class="text-2xl font-black text-blue-900">12</h4>
-                    </div>
-                    <div class="p-4 bg-orange-50 rounded-2xl">
-                        <p class="text-[10px] text-orange-400 font-black uppercase">طلبات بانتظار المراجعة</p>
-                        <h4 class="text-2xl font-black text-orange-600" id="pending-count">1</h4>
-                    </div>
-                </div>
-            </div>
         </div>
-    </div>
+
+        <div class="md:col-span-3 bg-slate-800 p-8 rounded-[2.5rem] border border-slate-700">
+            <h3 class="font-black text-xl mb-6 text-white">طلبات انضمام الخبراء</h3>
+            <div id="expert-apps" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                </div>
+        </div>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
     <script>
-        // --- إضافة نظام الرمز السري هنا في البداية ---
-        const adminPass = "2025"; // هذا هو الرمز السري، يمكنك تغييره لأي رقم تريده
-        let entry = prompt("يرجى إدخال رمز الدخول للمدير لفتح اللوحة:");
+        const firebaseConfig = {
+            apiKey: "AIzaSyAZSFCf7piwKykf_klgGlzc4RkCXumNRUg",
+            authDomain: "shooor-app.firebaseapp.com",
+            projectId: "shooor-app",
+            storageBucket: "shooor-app.firebasestorage.app",
+            messagingSenderId: "356426973132",
+            appId: "1:356426973132:web:6353917bf13a64074d6769"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
-        if (entry !== adminPass) {
-            alert("عذراً، الرمز خاطئ. لا تملك صلاحية الدخول.");
-            window.location.href = "index.html"; // طرد الشخص للصفحة الرئيسية
-        }
-        // --- نهاية كود الرمز السري ---
+        // 1. مراقبة الجلسات والمدفوعات
+        db.collection("consultations").onSnapshot(snapshot => {
+            let total = 0;
+            const sessionDiv = document.getElementById('live-sessions');
+            sessionDiv.innerHTML = '';
+            
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                if(data.status === 'paid') {
+                    total += 50;
+                    sessionDiv.innerHTML += `
+                        <div class="flex justify-between items-center p-4 bg-slate-50 rounded-2xl border">
+                            <div>
+                                <p class="font-black text-sm">${data.userName} ⬅️ ${data.expertName}</p>
+                                <p class="text-[10px] text-green-600 font-bold italic">تم الدفع وجاري الشات</p>
+                            </div>
+                            <span class="text-xs font-black">50 ر.س</span>
+                        </div>
+                    `;
+                }
+            });
+            document.getElementById('total-paid').innerText = total + " ر.س";
+        });
 
-        function approveExpert(id, name) {
-            const tags = document.getElementById(`tags-input-${id}`).value;
-            if(!tags) {
-                alert("يرجى إضافة عناوين الخبرة أولاً (مثلاً: خبير تركيا، راعي غنم)");
-                return;
-            }
-            
-            alert(`تم اعتماد ${name} بنجاح!\nالعناوين المضافة: ${tags}`);
-            
-            const card = document.getElementById(`tags-input-${id}`).closest('.bg-white');
-            card.style.opacity = '0.5';
-            card.style.pointerEvents = 'none';
-            document.getElementById('pending-count').innerText = "0";
-        }
+        // 2. مراقبة طلبات الانضمام
+        db.collection("expert_applications").orderBy("createdAt", "desc").onSnapshot(snapshot => {
+            const appDiv = document.getElementById('expert-apps');
+            appDiv.innerHTML = '';
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                appDiv.innerHTML += `
+                    <div class="bg-slate-900 p-5 rounded-2xl border border-slate-700">
+                        <p class="text-orange-500 font-black mb-1">${data.name}</p>
+                        <p class="text-xs text-slate-300 mb-3">${data.category}</p>
+                        <a href="https://wa.me/${data.phone}" target="_blank" class="text-[10px] bg-green-500 text-white px-3 py-1 rounded-full font-bold">تواصل واتساب</a>
+                    </div>
+                `;
+            });
+        });
     </script>
 </body>
 </html>
