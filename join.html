@@ -8,42 +8,66 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>body { font-family: 'Tajawal', sans-serif; }</style>
 </head>
-<body class="bg-slate-50 text-right">
+<body class="bg-slate-50">
     <div class="max-w-xl mx-auto py-12 px-6">
-        <div class="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
-            <h1 class="text-3xl font-black text-blue-900 mb-2">انضم لخبراء شـــووور</h1>
-            <p class="text-slate-500 mb-8 font-bold text-sm">أدخل بياناتك وسيتم مراجعة طلبك واعتماده من قبل الإدارة.</p>
+        <div class="bg-white rounded-[2.5rem] shadow-xl p-10 text-right">
+            <h2 class="text-3xl font-black text-blue-900 mb-2 italic">انضم لمجتمع الخبراء</h2>
+            <p class="text-slate-500 font-bold mb-8 text-sm">شارك تجربتك وساعد الآخرين واربح من وقتك.</p>
             
             <form id="join-form" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-black text-slate-400 mb-2 uppercase">الاسم الكامل</label>
-                    <input type="text" id="expert-name" required class="w-full p-4 bg-slate-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-900 transition-all">
+                    <label class="block text-xs font-black text-slate-400 mb-2 uppercase">الاسم الثلاثي</label>
+                    <input type="text" id="expert-name" required class="w-full p-4 bg-slate-50 rounded-2xl border-none outline-none focus:ring-2 ring-blue-900">
                 </div>
                 <div>
-                    <label class="block text-xs font-black text-slate-400 mb-2 uppercase">ما هي تجربتك التي تود نقلها؟ (مثلاً: دراسة في الخارج)</label>
-                    <textarea id="expert-bio" required class="w-full p-4 bg-slate-50 rounded-2xl outline-none h-32"></textarea>
+                    <label class="block text-xs font-black text-slate-400 mb-2 uppercase">مجال الخبرة (تجربة عشتها)</label>
+                    <input type="text" id="expert-category" placeholder="مثال: تجربة الابتعاث، تعافي من مرض.." required class="w-full p-4 bg-slate-50 rounded-2xl border-none outline-none focus:ring-2 ring-blue-900">
                 </div>
                 <div>
-                    <label class="block text-xs font-black text-slate-400 mb-2 uppercase">رقم الجوال (للتواصل معك)</label>
-                    <input type="tel" id="expert-phone" placeholder="05xxxxxxxx" required class="w-full p-4 bg-slate-50 rounded-2xl outline-none text-left">
+                    <label class="block text-xs font-black text-slate-400 mb-2 uppercase">رقم التواصل</label>
+                    <input type="tel" id="expert-phone" required class="w-full p-4 bg-slate-50 rounded-2xl border-none outline-none focus:ring-2 ring-blue-900">
                 </div>
-                
-                <button type="submit" class="w-full bg-blue-900 text-white py-5 rounded-2xl font-black shadow-lg hover:bg-orange-500 transition-all mt-6">إرسال الطلب للمراجعة</button>
+                <button type="submit" class="w-full bg-orange-500 text-white py-5 rounded-2xl font-black shadow-lg hover:bg-blue-900 transition-all">إرسال طلب الانضمام</button>
             </form>
-            
-            <div id="success-msg" class="hidden mt-6 p-4 bg-green-50 text-green-700 rounded-2xl text-center font-bold">
-                تم استلام طلبك بنجاح! سيتم التواصل معك بعد مراجعة الإدارة.
+            <div id="success-msg" class="hidden text-center py-6">
+                <div class="text-5xl mb-4">🎉</div>
+                <h3 class="text-xl font-black text-blue-900">تم استلام طلبك!</h3>
+                <p class="text-slate-500 text-sm mt-2 font-bold">سنتواصل معك عبر الواتساب قريباً.</p>
             </div>
         </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
     <script>
-        document.getElementById('join-form').onsubmit = function(e) {
+        const firebaseConfig = {
+            apiKey: "AIzaSyAZSFCf7piwKykf_klgGlzc4RkCXumNRUg",
+            authDomain: "shooor-app.firebaseapp.com",
+            projectId: "shooor-app",
+            storageBucket: "shooor-app.firebasestorage.app",
+            messagingSenderId: "356426973132",
+            appId: "1:356426973132:web:6353917bf13a64074d6769"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        document.getElementById('join-form').onsubmit = async (e) => {
             e.preventDefault();
-            // هنا سيتم الربط مع قاعدة البيانات لاحقاً
-            this.classList.add('hidden');
+            const btn = e.target.querySelector('button');
+            btn.disabled = true; btn.innerText = "جاري الإرسال...";
+
+            await db.collection("expert_applications").add({
+                name: document.getElementById('expert-name').value,
+                category: document.getElementById('expert-category').value,
+                phone: document.getElementById('expert-phone').value,
+                status: 'pending',
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            document.getElementById('join-form').classList.add('hidden');
             document.getElementById('success-msg').classList.remove('hidden');
-        }
+        };
     </script>
 </body>
 </html>
