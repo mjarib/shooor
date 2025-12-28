@@ -6,36 +6,20 @@
     <title>لوحة تحكم الخبير | شـــووور</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Tajawal', sans-serif; }
-        .request-card { transition: all 0.3s ease; }
-        .request-card:hover { transform: translateY(-3px); }
-    </style>
+    <style>body { font-family: 'Tajawal', sans-serif; }</style>
 </head>
 <body class="bg-slate-50 text-slate-900">
 
     <header class="bg-blue-900 text-white py-6 px-6 shadow-lg">
         <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <div>
-                <h1 class="text-2xl font-black">لوحة تحكم الخبير</h1>
-                <p class="text-blue-200 text-xs font-bold mt-1">إدارة طلبات الاستشارة المباشرة</p>
-            </div>
-            <button onclick="window.location.href='index.html'" class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-xl text-xs font-bold border border-white/20">العودة للموقع</button>
+            <h1 class="text-2xl font-black tracking-tighter italic">لوحة تحكم الخبير</h1>
+            <button onclick="window.location.href='index.html'" class="bg-white/10 px-4 py-2 rounded-xl text-xs font-bold border">العودة للموقع</button>
         </div>
     </header>
 
     <main class="max-w-4xl mx-auto py-10 px-6">
-        <div class="flex items-center justify-between mb-8">
-            <h2 class="text-xl font-black text-blue-900">طلبات الانتظار الحالية</h2>
-            <span id="requests-count" class="bg-orange-500 text-white text-[10px] px-3 py-1 rounded-full font-black">0 طلبات</span>
-        </div>
-
-        <div id="requests-container" class="grid grid-cols-1 gap-4">
-            <div id="loading" class="text-center py-20">
-                <div class="w-10 h-10 border-4 border-blue-900 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                <p class="text-slate-400 font-bold text-sm">جاري جلب الطلبات الجديدة...</p>
-            </div>
-        </div>
+        <h2 class="text-xl font-black text-blue-900 mb-8">الطلبات الواردة</h2>
+        <div id="requests-container" class="space-y-4"></div>
     </main>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -53,69 +37,52 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        const requestsContainer = document.getElementById('requests-container');
-        const requestsCountLabel = document.getElementById('requests-count');
-
         function listenToRequests() {
             db.collection("consultations")
-                .where("status", "==", "pending")
+                .where("status", "in", ["pending", "paid"])
                 .orderBy("createdAt", "desc")
                 .onSnapshot((snapshot) => {
-                    if (document.getElementById('loading')) document.getElementById('loading').style.display = 'none';
-                    requestsContainer.innerHTML = '';
-                    requestsCountLabel.innerText = `${snapshot.size} طلبات`;
-
-                    if (snapshot.empty) {
-                        requestsContainer.innerHTML = `
-                            <div class="text-center py-20 bg-white rounded-[2.5rem] border-2 border-dashed border-slate-200">
-                                <p class="text-slate-400 font-bold">لا توجد طلبات استشارة جديدة حالياً</p>
-                            </div>
-                        `;
-                        return;
-                    }
-
+                    const container = document.getElementById('requests-container');
+                    container.innerHTML = '';
                     snapshot.forEach((doc) => {
                         const data = doc.data();
-                        const requestId = doc.id;
+                        const id = doc.id;
                         
-                        requestsContainer.innerHTML += `
-                            <div class="request-card bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
-                                <div class="text-right w-full">
-                                    <div class="flex items-center gap-2 mb-1">
-                                        <span class="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
+                        if(data.status === 'pending') {
+                            container.innerHTML += `
+                                <div class="bg-white p-6 rounded-2xl shadow-sm border flex justify-between items-center">
+                                    <div>
                                         <h3 class="font-black text-blue-900">${data.userName}</h3>
+                                        <p class="text-xs text-slate-400 font-bold">يطلب استشارتك الآن</p>
                                     </div>
-                                    <p class="text-xs text-slate-500 font-bold">يطلب استشارة من: <span class="text-blue-600">${data.expertName}</span></p>
-                                </div>
-                                <div class="flex gap-2 w-full md:w-auto">
-                                    <button onclick="updateStatus('${requestId}', 'approved', '${data.expertName}')" class="flex-grow bg-green-500 text-white px-6 py-3 rounded-2xl font-black text-xs shadow-lg shadow-green-100 hover:bg-green-600">قبول الاستشارة</button>
-                                    <button onclick="updateStatus('${requestId}', 'rejected')" class="bg-slate-100 text-slate-400 px-6 py-3 rounded-2xl font-black text-xs hover:bg-red-50 hover:text-red-500">رفض</button>
-                                </div>
-                            </div>
-                        `;
+                                    <div class="flex gap-2">
+                                        <button onclick="updateStatus('${id}', 'approved')" class="bg-green-500 text-white px-6 py-2 rounded-xl font-black text-xs">قبول</button>
+                                        <button onclick="updateStatus('${id}', 'rejected')" class="bg-red-50 text-red-500 px-6 py-2 rounded-xl font-black text-xs">رفض</button>
+                                    </div>
+                                </div>`;
+                        } else if(data.status === 'paid') {
+                            container.innerHTML += `
+                                <div class="bg-blue-900 text-white p-6 rounded-2xl shadow-sm flex justify-between items-center animate-pulse">
+                                    <div>
+                                        <h3 class="font-black">${data.userName} (تم الدفع)</h3>
+                                        <p class="text-xs opacity-70">المستخدم بانتظارك في غرفة الدردشة</p>
+                                    </div>
+                                    <button onclick="goToChat('${id}', '${data.expertName}')" class="bg-orange-500 text-white px-6 py-2 rounded-xl font-black text-xs shadow-lg">دخول الغرفة</button>
+                                </div>`;
+                        }
                     });
-                }, (error) => {
-                    console.error("Firestore Error: ", error);
                 });
         }
 
-        async function updateStatus(id, newStatus, expertName) {
-            try {
-                await db.collection("consultations").doc(id).update({
-                    status: newStatus
-                });
-                
-                if (newStatus === 'approved') {
-                    alert("تم قبول الطلب بنجاح.");
-                    window.location.href = `chat.html?expert=${encodeURIComponent(expertName)}&requestId=${id}`;
-                }
-            } catch (error) {
-                console.error("Error updating status: ", error);
-                alert("حدث خطأ، تأكد من إعدادات Firestore Rules.");
-            }
+        async function updateStatus(id, status) {
+            await db.collection("consultations").doc(id).update({ status: status });
         }
 
-        window.onload = listenToRequests;
+        function goToChat(id, expert) {
+            window.location.href = `chat.html?requestId=${id}&expert=${encodeURIComponent(expert)}`;
+        }
+
+        listenToRequests();
     </script>
 </body>
 </html>
