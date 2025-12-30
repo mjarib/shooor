@@ -1,89 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شـــووور | ما خاب من استشار</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-</head>
-<body class="bg-slate-50 font-['Tajawal']">
-
-    <nav class="bg-white border-b px-6 py-4 flex justify-between items-center sticky top-0 z-50 shadow-sm">
-        <div class="flex flex-col">
-            <span class="text-2xl font-black text-blue-900">شـــووور</span>
-            <span class="text-[10px] text-orange-500 font-bold uppercase tracking-widest">Shooor.sa</span>
-        </div>
-        <div class="flex gap-4 items-center">
-            <a href="join.html" class="text-sm font-bold text-blue-900 border-2 border-blue-900 px-4 py-1 rounded-full hover:bg-blue-900 hover:text-white transition-all">انظم كمجرب</a>
-            <div id="authArea">
-                <button onclick="login()" class="bg-blue-900 text-white px-6 py-2 rounded-full text-xs font-bold shadow-lg">حسابي</button>
-            </div>
-        </div>
-    </nav>
-
-    <header class="py-20 px-6 text-center bg-white border-b">
-        <h1 class="text-4xl md:text-5xl font-black text-blue-900 mb-12 italic text-shadow-sm">" ما خاب من استشار "</h1>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto px-4">
-            <div onclick="location.href='category.html?type=travel'" class="group bg-blue-50 p-12 rounded-[3.5rem] shadow-sm hover:shadow-xl hover:scale-105 cursor-pointer transition-all border-2 border-transparent hover:border-blue-900">
-                <span class="text-6xl block mb-4 group-hover:animate-bounce">✈️</span>
-                <h2 class="text-2xl font-black text-blue-900">تجارب السفر</h2>
-            </div>
-            <div onclick="location.href='category.html?type=health'" class="group bg-red-50 p-12 rounded-[3.5rem] shadow-sm hover:shadow-xl hover:scale-105 cursor-pointer transition-all border-2 border-transparent hover:border-red-600">
-                <span class="text-6xl block mb-4 group-hover:animate-bounce">🏥</span>
-                <h2 class="text-2xl font-black text-red-600">تجارب الصحة</h2>
-            </div>
-        </div>
-    </header>
-
-    <script src="config.js"></script>
-    <script>
-        // دالة تسجيل الدخول
-        function login() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            // نستخدم Redirect لضمان عملها على كل المتصفحات
-            auth.signInWithRedirect(provider);
-        }
-
-        // دالة تسجيل الخروج
-        function logout() {
-            auth.signOut().then(() => location.reload());
-        }
-
-        // *** الخطوة المهمة: استلام البيانات بعد العودة من قوقل ***
-        auth.getRedirectResult().then((result) => {
-            if (result.user) {
-                console.log("مرحباً بك:", result.user.displayName);
-                // لا نحتاج لعمل شيء هنا، المستمع بالأسفل سيحدث الواجهة
-            }
-        }).catch((error) => {
-            if (error.code !== 'auth/invalid-pending-token') {
-                console.error("خطأ في تسجيل الدخول:", error.message);
-            }
-        });
-
-        // مراقبة حالة المستخدم وتحديث شكل الأزرار
-        auth.onAuthStateChanged(user => {
-            const authArea = document.getElementById('authArea');
-            if(user) {
-                // إذا سجل دخوله، يظهر اسمه وزر خروج
-                authArea.innerHTML = `
-                    <div class="flex items-center gap-3 bg-slate-100 p-1 pr-4 rounded-full border">
-                        <span class="text-xs font-black text-blue-900">${user.displayName.split(' ')[0]}</span>
-                        <button onclick="logout()" class="bg-white text-red-500 text-[10px] font-bold p-2 rounded-full shadow-sm hover:bg-red-50">خروج</button>
-                    </div>
-                `;
-            } else {
-                // إذا لم يسجل، يظهر زر "حسابي"
-                authArea.innerHTML = `
-                    <button onclick="login()" class="bg-blue-900 text-white px-6 py-2 rounded-full text-xs font-bold shadow-lg hover:bg-blue-800 transition-all">حسابي</button>
-                `;
-            }
-        });
-    </script>
-</body>
-</html>
